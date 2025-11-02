@@ -1,31 +1,45 @@
-import { Console } from "@woowacourse/mission-utils";
 import InputView from "../view/InputView.js";
 import OutputView from "../view/OutputView.js";
 import Parser from "../service/models/Parser.js";
-import { retryOnException } from "../utils/retryOnException.js";
 import LottoGenerator from "../service/models/LottoGenerator.js";
-import LottoWinChecker from "../service/models/LottoWinChecker.js";
+import LottoWinChecker from "../service/models/LottoChecker.js";
+import calculatePurchaseCount from "../service/models/LottoCalculator.js"
+import retryOnException from "../utils/retryOnException.js"
 
 class LottoController {
   async run() {
     try {
-      const budget = await retryOnException(InputView.getBudget());
-      const lottoCount = Parser.budgetParser(budget);
+      const budget = await retryOnException(async () => {
+        const budgetInput = await InputView.getBudget();
+        return Parser.budgetParser(budgetInput);
+      });
+
+      const lottoCount = calculatePurchaseCount(budget);
+      const lottos = LottoGenerator.generate(lottoCount);
       OutputView.printLottoCount(lottoCount);
-
-      const winningNumbersInput = await retryOnException(InputView.getWinningNumbers());
-      const winningNumbers = Parser.winningNumbersParser(winningNumbersInput);
-
-      const bonusNumberInput = await retryOnException(InputView.getBonusNumber());
-      const bonusNumber = Parser.bonusNumberParser(bonusNumberInput, winningNumbers)
-
-      const lottos = LottoGenerator.generate(amountToBuy)
       OutputView.printLottos(lottos);
 
-      const winningLotto = LottoWinChecker.matchLottoNumbers(lottos, winningNumbers, bonusNumber)
+      const winningNumbers = await retryOnException(async () => {
+        const winningNumbersInput = await InputView.getWinningNumbers();
+        return Parser.winningNumbersParser(winningNumbersInput);
+      });
+
+      const bonusNumber = await retryOnException(async () => {
+        const bonusNumberInput = await InputView.getBonusNumber();
+        return Parser.bonusNumberParser(bonusNumberInput, winningNumbers);
+      });
+
+      const { results, profitRate } = LottoWinChecker.check(
+        lottos,
+        budget,
+        winningNumbers,
+        bonusNumber
+      );
+      
       OutputView.printResultHeader();
-      const ROI = LottoWinChecker.calculateROI(winningLotto, amountToBuy)
-      OutputView.printResults(winningLotto, ROI)
+      OutputView.printResults(results)
+      OutputView.printProfitRate(profitRate);
+
     } catch (error) {
       throw error;
     }
