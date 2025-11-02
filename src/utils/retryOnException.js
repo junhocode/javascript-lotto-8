@@ -1,14 +1,13 @@
-export const retryOnException = async (
-  asyncInputFunction,
-  validationFunction
-) => {
+import OutputView from "../view/OutputView.js";
+
+const retryOnException = async (callable) => {
   while (true) {
     try {
-      const inputValue = await asyncInputFunction();
-      validationFunction(inputValue);
-      return inputValue;
+      return await callable();
     } catch (error) {
-      throw new Error(error);
+      OutputView.printError(error);
     }
   }
 };
+
+export default retryOnException;
