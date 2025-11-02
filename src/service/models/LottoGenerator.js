@@ -1,19 +1,10 @@
 import { Random } from "@woowacourse/mission-utils";
-import Lotto from "../../Lotto.js";
-import InputView from "../../view/InputView.js";
-import Validator from "../validator/Validator.js";
-import { CONSTANTS } from "../../constants/constants.js";
+import Lotto from "./Lotto.js";
 
 class LottoGenerator {
-  static getAmountToBuy(budgetInput) {
-    Validator.validateBudget(budgetInput);
-    const amountNumber = Number(budgetInput / CONSTANTS.LOTTO_PRICE);
-    return amountNumber;
-  }
-
-  static generate(amountNumber) {
+  static generate(lottoCount) {
     const lottos = [];
-    for (let i = 0; i < amountNumber; i++) {
+    for (let i = 0; i < lottoCount; i++) {
       const numbers = LottoGenerator.#generateNumbers();
       const lotto = new Lotto(numbers);
       lottos.push(lotto);
