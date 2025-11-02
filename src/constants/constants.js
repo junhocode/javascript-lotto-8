@@ -3,9 +3,12 @@ export const CONSTANTS = {
     LOTTO_PRICE: 1000,
     MAX_LOTTO_NUMBER: 45,
     MIN_LOTTO_NUMBER: 1,
-    FIRST_PRIZE: 2000000000,
-    SECOND_PRIZE: 30000000,
-    THIRD_PRIZE: 1500000,
-    FOUTRH_PRIZE: 50000,
-    FIFTH_PRIZE: 5000
+}
+
+export const WINNING_CRITERIA = {
+  FIRST:  { match: 6, hasBonusNumber: false, prize: 2000000000, rank: 1 },
+  SECOND: { match: 5, hasBonusNumber: true,  prize: 30000000, rank: 2 },
+  THIRD:  { match: 5, hasBonusNumber: false, prize: 1500000, rank: 3 },
+  FOURTH: { match: 4, hasBonusNumber: false, prize: 50000, rank: 4 },
+  FIFTH:  { match: 3, hasBonusNumber: false, prize: 5000, rank: 5 },
 }
