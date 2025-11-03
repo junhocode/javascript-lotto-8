@@ -9,7 +9,7 @@ import retryOnException from "../utils/retryOnException.js"
 class LottoController {
   async run() {
     try {
-      const { lottoCount, lottos } = await this.#purchaseLottos();
+      const { budget, lottoCount, lottos } = await this.#purchaseLottos();
       OutputView.printLottoCount(lottoCount);
       OutputView.printLottos(lottos);
 
@@ -18,6 +18,7 @@ class LottoController {
       const bonusNumber = await this.#getBonusNumber(winningNumbers);
 
       const { results, profitRate } = LottoChecker.check(
+        budget,
         lottos,
         winningNumbers,
         bonusNumber
@@ -38,7 +39,7 @@ class LottoController {
       const budget = Parser.budgetParser(budgetInput);
       const lottoCount = calculatePurchaseCount(budget);
       const lottos = LottoGenerator.generate(lottoCount);
-      return { lottoCount, lottos };
+      return { budget, lottoCount, lottos };
     });
   }
 
