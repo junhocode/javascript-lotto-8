@@ -2,7 +2,7 @@ import InputView from "../view/InputView.js";
 import OutputView from "../view/OutputView.js";
 import Parser from "../service/models/Parser.js";
 import LottoGenerator from "../service/models/LottoGenerator.js";
-import LottoWinChecker from "../service/models/LottoChecker.js";
+import LottoChecker from "../service/models/LottoChecker.js";
 import calculatePurchaseCount from "../service/models/LottoCalculator.js"
 import retryOnException from "../utils/retryOnException.js"
 
@@ -29,7 +29,7 @@ class LottoController {
         return Parser.bonusNumberParser(bonusNumberInput, winningNumbers);
       });
 
-      const { results, profitRate } = LottoWinChecker.check(
+      const { results, profitRate } = LottoChecker.check(
         lottos,
         budget,
         winningNumbers,

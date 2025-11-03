@@ -1,6 +1,6 @@
 import { WINNING_CRITERIA } from "../../constants/constants.js";
 
-class LottoWinChecker {
+class LottoChecker {
   static check(lottos, budget, winningNumbers, bonusNumber) {
     const results = { FIRST: 0, SECOND: 0, THIRD: 0, FOURTH: 0, FIFTH: 0 };
 
@@ -31,4 +31,4 @@ class LottoWinChecker {
   }
 }
 
-export default LottoWinChecker;
+export default LottoChecker;
