@@ -9,33 +9,20 @@ import retryOnException from "../utils/retryOnException.js"
 class LottoController {
   async run() {
     try {
-      const budget = await retryOnException(async () => {
-        const budgetInput = await InputView.getBudget();
-        return Parser.budgetParser(budgetInput);
-      });
-
-      const lottoCount = calculatePurchaseCount(budget);
-      const lottos = LottoGenerator.generate(lottoCount);
+      const { lottoCount, lottos } = await this.#purchaseLottos();
       OutputView.printLottoCount(lottoCount);
       OutputView.printLottos(lottos);
 
-      const winningNumbers = await retryOnException(async () => {
-        const winningNumbersInput = await InputView.getWinningNumbers();
-        return Parser.winningNumbersParser(winningNumbersInput);
-      });
+      const winningNumbers = await this.#getWinningNumbers();
 
-      const bonusNumber = await retryOnException(async () => {
-        const bonusNumberInput = await InputView.getBonusNumber();
-        return Parser.bonusNumberParser(bonusNumberInput, winningNumbers);
-      });
+      const bonusNumber = await this.#getBonusNumber(winningNumbers);
 
       const { results, profitRate } = LottoChecker.check(
         lottos,
-        budget,
         winningNumbers,
         bonusNumber
       );
-      
+
       OutputView.printResultHeader();
       OutputView.printResults(results)
       OutputView.printProfitRate(profitRate);
@@ -43,6 +30,30 @@ class LottoController {
     } catch (error) {
       throw error;
     }
+  }
+
+  async #purchaseLottos() {
+    return retryOnException(async () => {
+      const budgetInput = await InputView.getBudget();
+      const budget = Parser.budgetParser(budgetInput);
+      const lottoCount = calculatePurchaseCount(budget);
+      const lottos = LottoGenerator.generate(lottoCount);
+      return { lottoCount, lottos };
+    });
+  }
+
+  async #getWinningNumbers() {
+    return retryOnException(async () => {
+      const winningNumbersInput = await InputView.getWinningNumbers();
+      return Parser.winningNumbersParser(winningNumbersInput);
+    });
+  }
+
+  async #getBonusNumber(winningNumbers) {
+    return retryOnException(async () => {
+      const bonusNumberInput = await InputView.getBonusNumber();
+      return Parser.bonusNumberParser(bonusNumberInput, winningNumbers);
+    });
   }
 }
 
