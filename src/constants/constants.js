@@ -3,12 +3,21 @@ export const CONSTANTS = {
     LOTTO_PRICE: 1000,
     MAX_LOTTO_NUMBER: 45,
     MIN_LOTTO_NUMBER: 1,
+    FIFTH_PRIZE: 5000,
+    FOURTH_PRIZE: 50000,
+    THIRD_PRIZE: 1500000,
+    SECOND_PRIZE: 30000000,
+    FIRST_PRIZE: 2000000000,
+    MATCH_FOR_FIFTH: 3,
+    MATCH_FOR_FOURTH: 4,
+    MATCH_FOR_THIRD_AND_SECOND: 5,
+    MATCH_FOR_FIRST: 6
 }
 
 export const WINNING_CRITERIA = {
-  FIRST:  { match: 6, hasBonusNumber: false, prize: 2000000000, rank: 1 },
-  SECOND: { match: 5, hasBonusNumber: true,  prize: 30000000, rank: 2 },
-  THIRD:  { match: 5, hasBonusNumber: false, prize: 1500000, rank: 3 },
-  FOURTH: { match: 4, hasBonusNumber: false, prize: 50000, rank: 4 },
-  FIFTH:  { match: 3, hasBonusNumber: false, prize: 5000, rank: 5 },
+  FIFTH:  { match: CONSTANTS.MATCH_FOR_FIFTH, hasBonusNumber: false, prize: CONSTANTS.FIFTH_PRIZE, rank: 5 },
+  FOURTH: { match: CONSTANTS.MATCH_FOR_FOURTH, hasBonusNumber: false, prize: CONSTANTS.FOURTH_PRIZE, rank: 4 },
+  THIRD:  { match: CONSTANTS.MATCH_FOR_THIRD_AND_SECOND, hasBonusNumber: false, prize: CONSTANTS.THIRD_PRIZE, rank: 3 },
+  SECOND: { match: CONSTANTS.MATCH_FOR_THIRD_AND_SECOND, hasBonusNumber: true,  prize: CONSTANTS.SECOND_PRIZE, rank: 2 },
+  FIRST:  { match: CONSTANTS.MATCH_FOR_FIRST, hasBonusNumber: false, prize: CONSTANTS.FIRST_PRIZE, rank: 1 },
 }
