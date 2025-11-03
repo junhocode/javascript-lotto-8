@@ -19,14 +19,6 @@ class Lotto {
     return this.#numbers;
   }
 
-  #countMatchingNumber(winningNumbers) {
-    return this.#numbers.filter((number) => winningNumbers.includes(number)).length
-  }
-
-  #hasBonusNumber(bonusNumber) {
-    return this.#numbers.includes(bonusNumber)
-  }
-
   getRank(winningNumbers, bonusNumber) {
     const matchCount = this.#countMatchingNumber(winningNumbers)
     const hasBonus = this.#hasBonusNumber(bonusNumber)
@@ -38,6 +30,14 @@ class Lotto {
     if (matchCount === 3) return 'FIFTH';
 
     return;
+  }
+
+  #countMatchingNumber(winningNumbers) {
+    return this.#numbers.filter((number) => winningNumbers.includes(number)).length
+  }
+
+  #hasBonusNumber(bonusNumber) {
+    return this.#numbers.includes(bonusNumber)
   }
 }
 
