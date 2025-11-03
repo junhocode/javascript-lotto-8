@@ -1,7 +1,8 @@
 import { WINNING_CRITERIA } from "../../constants/constants.js";
+import { CONSTANTS } from "../../constants/constants.js";
 
 class LottoChecker {
-  static check(lottos, budget, winningNumbers, bonusNumber) {
+  static check(lottos, winningNumbers, bonusNumber) {
     const results = { FIRST: 0, SECOND: 0, THIRD: 0, FOURTH: 0, FIFTH: 0 };
 
     lottos.forEach((lotto) => {
@@ -19,13 +20,14 @@ class LottoChecker {
       }
     });
 
-    const profitRate = this.#calculateProfitRate(totalEarnings, budget);
+    const profitRate = this.#calculateProfitRate(lottos, totalEarnings);
 
     return { results, profitRate };
   }
 
-  static #calculateProfitRate(totalEarnings, budget) {
-    if (budget === 0) return 0;
+  static #calculateProfitRate(lottos, totalEarnings) {
+    if (lottos.length === 0) return 0;
+    const budget = lottos.length * CONSTANTS.LOTTO_PRICE
 
     return ((totalEarnings / budget) * 100).toFixed(1);
   }
