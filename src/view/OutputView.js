@@ -1,5 +1,6 @@
 import { Console } from "@woowacourse/mission-utils";
 import { UI_MESSGAES } from "../constants/messages.js";
+import { WINNING_CRITERIA } from "../constants/constants.js";
 
 class OutputView {
   static printLottoCount(lottoCount) {
@@ -18,7 +19,25 @@ class OutputView {
   }
 
   static printResults(results) {
-    Console.print(UI_MESSGAES.RESULT(results));
+    const rankKeys = Object.keys(WINNING_CRITERIA);
+
+    rankKeys.sort((keyA, keyB) => {
+      return WINNING_CRITERIA[keyB].rank - WINNING_CRITERIA[keyA].rank;
+    });
+
+    rankKeys.forEach(rankKey => {
+      const criteria = WINNING_CRITERIA[rankKey];
+      const count = results[rankKey];
+
+      let description = UI_MESSGAES.MATCH_DESCRIPTION(criteria.match);
+      
+      if (criteria.hasBonusNumber) description += UI_MESSGAES.BONUS_DESCRIPTION;
+
+      const formattedPrize = criteria.prize.toLocaleString('ko-KR');
+      
+      const resultLine = UI_MESSGAES.RESULT_LINE_FORMAT(description, formattedPrize, count);
+      Console.print(resultLine);
+    });
   }
 
   static printProfitRate(profitRate) {
