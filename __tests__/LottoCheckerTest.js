@@ -33,7 +33,7 @@ describe("LottoWinChecker 클래스", () => {
       ];
 
       // when
-      const result = LottoChecker.check(mockLottos, budget, winningNumbers, bonusNumber);
+      const result = LottoChecker.check(budget, mockLottos, winningNumbers, bonusNumber);
 
       // then
       const expectedResults = {
@@ -62,7 +62,7 @@ describe("LottoWinChecker 클래스", () => {
       ];
       
       // when
-      const result = LottoChecker.check(mockLottos, budget, winningNumbers, bonusNumber);
+      const result = LottoChecker.check(budget, mockLottos, winningNumbers, bonusNumber);
 
       // then
       const expectedResults = { FIRST: 0, SECOND: 0, THIRD: 0, FOURTH: 0, FIFTH: 0 };
