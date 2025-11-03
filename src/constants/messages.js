@@ -6,13 +6,9 @@ export const UI_MESSGAES = {
     GET_WINNING_NUMBERS: "\n당첨 번호를 입력해 주세요.\n",
     GET_BONUS_NUMBER: "\n보너스 번호를 입력해 주세요.\n",
     RESULT_HEADER: "\n당첨 통계\n---",
-    RESULT: (results) => [
-        `3개 일치 (5,000원) - ${results.FIFTH}개`,
-        `4개 일치 (50,000원) - ${results.FOURTH}개`,
-        `5개 일치 (1,500,000원) - ${results.THIRD}개`,
-        `5개 일치, 보너스 볼 일치 (30,000,000원) - ${results.SECOND}개`,
-        `6개 일치 (2,000,000,000원) - ${results.FIRST}개`
-    ].join('\n'),
+    MATCH_DESCRIPTION: (match) => `${match}개 일치`,
+    BONUS_DESCRIPTION: ', 보너스 볼 일치',
+    RESULT_LINE_FORMAT: (description, prize, count) => `${description} (${prize}원) - ${count}개`,
     PROFIT_RATE: (profitRate) => `총 수익률은 ${profitRate}%입니다.`
 }
 
